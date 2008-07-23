@@ -1,0 +1,6 @@
+xm.url do
+  xm.loc(loc)
+  xm.changefreq(changefreq)
+  xm.priority(priority)
+  xm.lastmod(lastmod)
+end

@@ -1,0 +1,26 @@
+xml.instruct! :xml, :version=> '1.0', :encoding => 'UTF-8'
+
+xml.urlset(
+  "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance",
+  "xsi:schemaLocation" => "http://www.sitemaps.org/schemas/sitemap/0.9\nhttp://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
+  "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9"
+) do
+  render :partial => "page", :locals => { 
+    :xm => xml, 
+    :loc => @plugin.site_uri,
+    :changefreq => @plugin.home_frequency,
+    :priority => @plugin.home_priority,
+    :lastmod => lastmod(@last_article)
+  }
+  @sections.each do |section|
+    articles_for_section(section).each do |article|
+      render :partial => "page", :locals => {
+        :xm => xml,
+        :loc => location(@site, article),
+        :changefreq => change_frequency(section),
+        :priority => @plugin.article_priority,
+        :lastmod => lastmod(article)
+      }
+    end
+  end
+end
